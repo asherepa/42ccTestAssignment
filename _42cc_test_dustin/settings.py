@@ -120,6 +120,10 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, 'templates'),
 )
 
+PROJECT_APPS = (
+    'apps.accounts',
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,7 +136,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'south',
-)
+) + PROJECT_APPS
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -162,3 +166,6 @@ LOGGING = {
         },
     }
 }
+
+AUTH_USER_MODEL = 'accounts.UserProfile'
+
