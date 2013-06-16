@@ -1,9 +1,49 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
-<head><title>My personal info</title></head>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static "css/960_24_col.css" %}" />
+    <title>My personal info</title>
+</head>
 <body>
     {% if profile %}
-    {{ profile.first_name }}
+    <div class="container_24">
+        <div class="grid_24 push_1"><h3>42 Coffee Cups Test Assignment</h3></div>
+        <div class="clear"></div>
+
+        <div class="grid_12 push_12">Contacts</div>
+        <div class="clear"></div>
+
+        <div class="grid_4 push_1">{{ profile.first_name }}</div>
+        <div class="grid_8 push_8"><p>Email:</p></div>
+        <div class="grid_4 push_2"><p>{{ profile.email }}</p></div>
+        <div class="clear"></div>
+
+        <div class="grid_4 push_1">{{ profile.last_name }}</div>
+        <div class="grid_8 push_8"><p>Jabber:</p></div>
+        <div class="grid_4 push_2"><p>{{ profile.jid }}</p></div>
+        <div class="clear"></div>
+
+        <div class="grid_4 push_1">{{ profile.date_of_birth|date:"d.m.Y" }}</div>
+        <div class="grid_8 push_8"><p>Skype:</p></div>
+        <div class="grid_4 push_2"><p>{{ profile.skype_id }}</p></div>
+        <div class="clear"></div>
+
+        <div class="grid_24"><p></p></div>
+        <div class="clear"></div>
+
+        <div class="grid_4 push_1"><p>Bio:</p></div>
+        <div class="grid_8 push_8"><p>Other contacts:</p></div>
+        <div class="clear"></div>
+
+
+        <div class="grid_4 push_1">
+            <textarea name="bio" cols="40" rows="10">{{ profile.bio }}</textarea>
+        </div>
+        <div class="grid_8 push_8">
+            <textarea name="bio" cols="40" rows="10">{{ profile.other_contacts }}</textarea>
+        </div>
+    </div>
     {% endif %}
 </body>
 </html>
