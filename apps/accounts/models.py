@@ -3,7 +3,7 @@ from django.db import models
 
 
 class UserProfile(AbstractUser):
-    date_of_birth = models.DateField(blank=True)
+    date_of_birth = models.DateField(default='1970-01-01')
     bio = models.TextField(max_length=1000, blank=True)
     jid = models.CharField(max_length=254, blank=True)
     skype_id = models.CharField(max_length=254, blank=True)

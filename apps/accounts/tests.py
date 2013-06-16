@@ -1,10 +1,12 @@
+from datetime import date
+
 from django.test import TestCase
 from django.test import Client
 
 
 USER_NAME = 'Andriy'
 USER_SURNAME = 'Sherepa'
-USER_DATE_OF_BIRTH = '30.10.1986'
+USER_DATE_OF_BIRTH = date(1986, 10, 30)
 USER_BIO = "It's my life"
 USER_JABBER_JID = 'dustin@jabber.ru'
 USER_SKYPE_ID = 'a.sherepa'
