@@ -14,7 +14,7 @@ class SimpleTest(TestCase):
         response = c.get('/request/')
         events_list = response.context['events']
         self.assertEqual(events_list.count(),
-            first_request_count + 1)
+                         first_request_count + 1)
 
     def test_request_page_max_entry(self):
         c = Client()
@@ -22,4 +22,15 @@ class SimpleTest(TestCase):
             response = c.get('/request/')
         events_list = response.context['events']
         self.assertEqual(events_list.count(),
-            REQUEST_PAGE_MAX_EVENTS)
+                         REQUEST_PAGE_MAX_EVENTS)
+
+
+class TestContextProcessor(TestCase):
+
+    def test_settings_context_processor(self):
+        c = Client()
+        response = c.get('/')
+        settings_context = response.context['settings']
+        self.assertTrue(settings_context)
+        self.assertEqual(settings_context.AUTH_USER_MODEL,
+                         'accounts.UserProfile')
