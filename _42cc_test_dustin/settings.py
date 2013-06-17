@@ -169,3 +169,8 @@ LOGGING = {
 
 AUTH_USER_MODEL = 'accounts.UserProfile'
 
+try:
+    from settings_local import *
+except ImportError:
+    pass
+
