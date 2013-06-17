@@ -1,7 +1,7 @@
 MANAGE=django-admin.py
 
 test:
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=_42cc_test_dustin.settings $(MANAGE) test accounts
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=_42cc_test_dustin.settings $(MANAGE) test accounts rlogger
 
 run:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=_42cc_test_dustin.settings $(MANAGE) runserver
