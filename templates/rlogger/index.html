@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+    <a href="/">Main page</a><br/><br/>
+    {% if events %}
+    {% for event in events %}
+        [{{ event.created_on|date:"d.m.Y H:i:s"}}] {{ event.method }} - {{ event.path }}<br/>
+    {% endfor %}
+    {% endif %}
+</body>
+</html>
