@@ -1,0 +1,3 @@
+First run:
+    ./manage syncdb --migrate
+    ./manage runserver
