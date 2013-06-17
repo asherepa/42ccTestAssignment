@@ -1,7 +1,13 @@
+MANAGE=django-admin.py
 
 test:
-	# activate our virtualenv environment
-	. $(VIRTUAL_ENV)/bin/activate
-	./manage.py test accounts  --pythonpath=`pwd`
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=_42cc_test_dustin.settings $(MANAGE) test accounts
+
+run:
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=_42cc_test_dustin.settings $(MANAGE) runserver
+
+syncdb:
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=_42cc_test_dustin.settings $(MANAGE) syncdb --migrate --noinput
+
 clean:
 	find -type f -name "*.pyc" -delete
