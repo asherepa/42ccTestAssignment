@@ -7,6 +7,9 @@ run:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=_42cc_test_dustin.settings $(MANAGE) runserver
 
 syncdb:
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=_42cc_test_dustin.settings $(MANAGE) syncdb --noinput
+
+syncall:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=_42cc_test_dustin.settings $(MANAGE) syncdb --migrate --noinput
 
 clean:
