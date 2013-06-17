@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="{% static "css/reset.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/text.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "css/960_24_col.css" %}" />
     <title>My personal info</title>
 </head>
@@ -42,6 +44,13 @@
         </div>
         <div class="grid_8 push_8">
             <textarea name="bio" cols="40" rows="10">{{ profile.other_contacts }}</textarea>
+        </div>
+
+        <div class="grid_21"><p></p><hr></div>
+        <div class="clear"></div>
+
+        <div class="grid_2">
+            <a href="/request">Request</a>
         </div>
     </div>
     {% endif %}
