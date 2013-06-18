@@ -28,5 +28,6 @@ class UserProfileForm(forms.ModelForm):
     class Media:
         js = ('http://code.jquery.com/jquery-1.9.1.js',
               'http://code.jquery.com/ui/1.10.3/jquery-ui.js',
+              'js/jquery.form.js',
               'js/accounts.js'
         )

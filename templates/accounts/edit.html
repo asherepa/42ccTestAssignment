@@ -1,6 +1,7 @@
 {% load static %}
 
-<form enctype="multipart/form-data" action="/edit/" method="POST">
+<form enctype="multipart/form-data" action="/edit/" method="POST"
+id="userform">
 {% csrf_token %}
 <div class="clear"></div>
 
@@ -45,6 +46,11 @@
 </div>
 <div class="clear"></div>
 
-<input type="submit" value="Save" />
+<div class="grid_8" id="sendwrapper"></div>
+<div class="clear"></div>
+<div class="grid_8" id="ajaxwrapper"></div>
+<div class="clear"></div>
+
+<input type="submit" id="sendbutton" value="Save" />
 <input type="reset" value="Cancel" />
 </form>
