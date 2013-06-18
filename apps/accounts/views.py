@@ -15,8 +15,8 @@ def index(request):
 
 @login_required
 def edit(request):
+    profile = UserProfile.objects.get(id=1)
     if request.method == 'POST':
-        profile = UserProfile.objects.get(id=1)
         interaction_field = ['first_name', 'last_name', 'bio', 'date_of_birth',
                              'email', 'jid', 'skype_id', 'other_contacts',
                              'user_photo']
@@ -28,11 +28,6 @@ def edit(request):
         else:
             return redirect('/accounts/edit/')
     else:
-        initial_form_data = {}
-        profile = UserProfile.objects.get(id=1)
-        for el in profile._meta.get_all_field_names():
-            if hasattr(profile, el):
-                initial_form_data[el] = getattr(profile, el)
-        form = UserProfileForm(initial=initial_form_data)
+        form = UserProfileForm(instance=profile)
         return render(request, 'accounts/index.html',
                       {'profile': profile, 'form': form})

@@ -2,7 +2,16 @@ from django import forms
 from .models import UserProfile
 
 
+class CalendarWidget(forms.DateInput):
+
+    class Media:
+        css = {
+            'all': ("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css",)
+        }
+
+
 class UserProfileForm(forms.ModelForm):
+
     class Meta:
         model = UserProfile
         exclude = ['username', 'password', 'last_login', 'date_joined']
@@ -12,5 +21,12 @@ class UserProfileForm(forms.ModelForm):
             'user_photo': forms.widgets.FileInput(attrs={
                             'accept': "image/jpeg,image/png,image/gif",
                             'size': 11
-                          })
+                          }),
+            'date_of_birth': CalendarWidget(attrs={'id': 'datepicker'}),
         }
+
+    class Media:
+        js = ('http://code.jquery.com/jquery-1.9.1.js',
+              'http://code.jquery.com/ui/1.10.3/jquery-ui.js',
+              'js/accounts.js'
+        )
