@@ -10,7 +10,6 @@ class index(generic.ListView):
     context_object_name = 'profile'
 
     def get_queryset(self):
-        print settings.HOSTING_PROVIDER
         if settings.HOSTING_PROVIDER == 'getbarista':
             try:
                 return UserProfile.objects.get(id=1)
@@ -26,4 +25,3 @@ def fix_getbarista_load_fixtures_from_app_bug():
                                              'asherepa@gmail.com',
                                              'testdata')
     u.save()
-    print u
