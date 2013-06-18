@@ -168,6 +168,7 @@ LOGGING = {
 }
 
 AUTH_USER_MODEL = 'accounts.UserProfile'
+HOSTING_PROVIDER = 'getbarista'
 
 try:
     from settings_local import *
