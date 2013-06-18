@@ -1,0 +1,6 @@
+{% load static %}
+{% if profile.user_photo %}
+<img src="{{ profile.user_photo.url }}" alt="{{ profile.get_full_name }}" height="300" width="250" border="2">
+{% else %}
+<img src="{% static "img/empty.png" %}" alt="{{ profile.get_full_name }}" height="300" width="250" border="2">
+{% endif %}

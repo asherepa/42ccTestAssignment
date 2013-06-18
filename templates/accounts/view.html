@@ -1,0 +1,37 @@
+{% load static %}
+<div class="grid_8 push_8">Contacts</div>
+<div class="clear"></div>
+
+<div class="grid_4 push_1">{{ profile.first_name }}</div>
+<div class="grid_4 push_4"><p>Email:</p></div>
+<div class="grid_4 push_2"><p>{{ profile.email }}</p></div>
+<div class="clear"></div>
+
+<div class="grid_4 push_1">{{ profile.last_name }}</div>
+<div class="grid_4 push_4"><p>Jabber:</p></div>
+<div class="grid_4 push_2"><p>{{ profile.jid }}</p></div>
+<div class="clear"></div>
+
+<div class="grid_4 push_1">{{ profile.date_of_birth|date:"d.m.Y" }}</div>
+<div class="grid_4 push_4"><p>Skype:</p></div>
+<div class="grid_4 push_2"><p>{{ profile.skype_id }}</p></div>
+<div class="clear"></div>
+
+<div class="grid_8 push_1">
+    <div>Photo:</div>
+    {% include "accounts/block_user_photo.html" %}
+</div>
+
+<div class="grid_8">
+    <div class="grid_4">Other contacts:</div>
+    <div class="clear"></div>
+    <div class="grid_4">
+        <textarea name="other_contacts" cols="40" rows="8">{{ profile.other_contacts }}</textarea>
+    </div>
+    <div class="clear"></div>
+    <div class="grid_4">
+    Bio:
+        <textarea name="bio" cols="40" rows="8">{{ profile.bio }}</textarea>
+    </div>
+</div>
+<div class="clear"></div>
