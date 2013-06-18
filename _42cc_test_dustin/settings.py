@@ -1,6 +1,6 @@
 # Django settings for _42cc_test_dustin project.
 import os
-
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT += '/..'
@@ -171,7 +171,7 @@ LOGGING = {
 
 AUTH_USER_MODEL = 'accounts.UserProfile'
 
-TEMPLATE_CONTEXT_PROCESSORS = (
+TEMPLATE_CONTEXT_PROCESSORS += (
     'apps.rlogger.context_processor.add_settings',
 )
 
