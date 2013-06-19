@@ -1,14 +1,15 @@
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 from .models import RequestsLogger
 
-REQUESTS_PAGE_URL = '/requests/'
 REQUESTS_PAGE_MAX_RECORD_PER_PAGE = 10
+REQUESTS_PAGE_URL = reverse('requests:index')
 
 
 class RequestsPageTest(TestCase):
     def test_record_created_in_db(self):
         count_before = RequestsLogger.objects.count()
-        self.client.get('/')
+        self.client.get(reverse('accounts:index'))
         count_after = RequestsLogger.objects.count()
         self.assertEqual(count_after, count_before + 1)
 
@@ -34,7 +35,7 @@ class RequestsPageTest(TestCase):
 
 class ContextProcessorTest(TestCase):
     def test_settings_context_processor(self):
-        response = self.client.get('/')
+        response = self.client.get(reverse('accounts:index'))
         self.assertTrue('settings' in response.context)
         settings_context = response.context['settings']
         self.assertEqual(settings_context.AUTH_USER_MODEL,
