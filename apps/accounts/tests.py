@@ -5,12 +5,14 @@ from django.test import Client
 
 
 USER_NAME = 'Andriy'
+USER_NEW_NAME = 'King-Kong-Dong'
 USER_SURNAME = 'Sherepa'
 USER_DATE_OF_BIRTH = date(1986, 10, 30)
-USER_BIO = "It's my life"
+USER_BIO = "It's my life\r\nIt's now or never\r\nI ain't gonna live forever"\
+    "\r\nI just want to live while I'm live\r\nIt's my life"
 USER_JABBER_JID = 'dustin@jabber.ru'
 USER_SKYPE_ID = 'a.sherepa'
-USER_OTHER_CONTACTS = 'Location: Kiev'
+USER_OTHER_CONTACTS = 'Location: Kiev\r\nPhone: +380675976116'
 
 
 class SimpleTest(TestCase):
