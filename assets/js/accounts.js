@@ -23,8 +23,8 @@ $(document).ready(function() {
         if (responseText['success']) {
             $("#sendwrapper span").remove();
             $("#sendwrapper")
-            .prepend('<span>The form has been successfully saved</span>')
-            .toggle(5000);
+                .prepend('<span>User profile has been successfully updated</span>')
+                .fadeOut(3000);
         } else {
             $.each(responseText['errors'], function(key, val) {
                 console.log("key:" + key + " val:" + val);
