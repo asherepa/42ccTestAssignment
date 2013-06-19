@@ -122,6 +122,7 @@ TEMPLATE_DIRS = (
 
 PROJECT_APPS = (
     'apps.accounts',
+    'apps.rlogger',
 )
 
 INSTALLED_APPS = (
