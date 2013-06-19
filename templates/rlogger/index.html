@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container_24">
-    <a href="/">Main page</a><br><br>
+    <a href="{% url 'accounts:index' %}">Main page</a><br><br>
     {% if events %}
         {% for event in events %}
             <div class="grid_4">
