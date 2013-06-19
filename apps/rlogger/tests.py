@@ -1,16 +1,25 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
 
+REQUESTS_PAGE_URL = '/requests/'
+REQUESTS_PAGE_MAX_RECORD_PER_PAGE = 10
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
+
+class RequestsPageTest(TestCase):
+    def test_add_record_count(self):
         """
-        Tests that 1 + 1 always equals 2.
+        Checking a new record created after the opening some pages
         """
-        self.assertEqual(1 + 1, 2)
+        count_before = self.get_response_count()
+        self.assertEqual(self.get_response_count(),
+                         count_before + 1)
+
+    def get_response_count(self):
+        response = self.client.get(REQUESTS_PAGE_URL)
+        events_list = response.context['events']
+        return events_list.count()
+
+    def test_requests_page_max_record_per_page(self):
+        for i in xrange(1, 12):
+            self.client.get(REQUESTS_PAGE_URL)
+        self.assertEqual(self.get_response_count(),
+                         REQUESTS_PAGE_MAX_RECORD_PER_PAGE)
