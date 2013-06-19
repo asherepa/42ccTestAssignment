@@ -30,3 +30,12 @@ class RequestsPageTest(TestCase):
         response = self.client.get(REQUESTS_PAGE_URL)
         events_list = response.context['events']
         return events_list.count()
+
+
+class ContextProcessorTest(TestCase):
+    def test_settings_context_processor(self):
+        response = self.client.get('/')
+        self.assertTrue('settings' in response.context)
+        settings_context = response.context['settings']
+        self.assertEqual(settings_context.AUTH_USER_MODEL,
+                         'accounts.UserProfile')
