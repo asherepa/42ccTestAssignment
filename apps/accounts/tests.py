@@ -2,7 +2,6 @@ from datetime import date
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from .forms import UserProfileForm
-from .models import UserProfile
 
 
 USER_NAME = 'Andriy'
@@ -69,13 +68,16 @@ class UserProfileFormTest(TestCase):
     }
 
     invalid_data_set = [
-        {'first_name': ''},
-        {'skype_id': 'error'}  # len < 6
+        {'skype_id': 'error'},  # len < 6
     ]
 
     def test_user_profile_form(self):
         form = UserProfileForm(self.valid_data)
         self.assertTrue(form.is_valid())
+
+        with open('assets/img/empty.png') as fphoto:
+            self.valid_data['user_photo'] = fphoto
+            self.assertTrue(form.is_valid())
 
         for data in self.invalid_data_set:
                 for key, value in data.iteritems():
@@ -83,7 +85,3 @@ class UserProfileFormTest(TestCase):
                     check_data[key] = value
                     form = UserProfileForm(check_data)
                     self.assertFalse(form.is_valid())
-
-        with open('assets/img/empty.png') as fphoto:
-            self.valid_data['user_photo'] = fphoto
-            self.assertTrue(form.is_valid())
