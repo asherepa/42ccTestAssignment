@@ -169,10 +169,6 @@ LOGGING = {
     }
 }
 
-FIXTURE_DIRS = (
-    '/apps/accounts/fixtures/',
-)
-
 AUTH_USER_MODEL = 'accounts.UserProfile'
 HOSTING_PROVIDER = 'getbarista'
 
