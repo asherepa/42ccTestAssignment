@@ -77,6 +77,7 @@ class UserProfileFormTest(TestCase):
 
         with open('assets/img/empty.png') as fphoto:
             self.valid_data['user_photo'] = fphoto
+            form = UserProfileForm(self.valid_data)
             self.assertTrue(form.is_valid())
 
         for data in self.invalid_data_set:
