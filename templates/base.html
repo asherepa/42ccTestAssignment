@@ -10,7 +10,21 @@
     {% endblock additional_resourses %}
 </head>
 <body>
+    <div class="container_24">
+    <div class="grid_10"><h3>42 Coffee Cups Test Assignment</h3></div>
+    <div class="grid_4 push_4">
+        {% include "accounts/index_login.html" %}
+    </div>
+    <div class="clear"></div>
+    </div>
+
     {% block content %}
     {% endblock content %}
+
+    <div class="container_24">
+        <div class="grid_16"><hr></div>
+        <div class="clear"></div>
+        <div class="grid_4"><a href="{% url 'requests:index' %}">Requests</a></div>
+    </div>
 </body>
 </html>
