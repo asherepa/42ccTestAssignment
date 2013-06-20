@@ -9,7 +9,7 @@ USER_LOGIN = 'admin'
 USER_PASSWORD = 'admin'
 USER_NEW_NAME = 'King-Kong-Dong'
 USER_SURNAME = 'Sherepa'
-USER_EMAIL = 'asherepa@gmail.com'
+USER_EMAIL = 'a.sherepa@gmail.com'
 USER_DATE_OF_BIRTH = date(1986, 10, 30)
 USER_BIO = "It's my life\r\nIt's now or never\r\nI ain't gonna live forever"\
     "\r\nI just want to live while I'm live\r\nIt's my life"
