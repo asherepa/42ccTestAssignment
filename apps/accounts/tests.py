@@ -6,6 +6,7 @@ from .models import UserProfile
 
 
 USER_NAME = 'Andriy'
+USER_LOGIN = 'dustin'
 USER_PASSWORD = 'testdata'
 USER_NEW_NAME = 'King-Kong-Dong'
 USER_SURNAME = 'Sherepa'
@@ -37,12 +38,14 @@ class AuthTest(TestCase):
     def test_login_success(self):
         response = self.client.get(APP_MAIN_PAGE)
         self.assertTrue(response.status_code, 200)
-        self.assertTrue(self.client.login(username=USER_NAME,
+        self.assertTrue(self.client.login(username=USER_LOGIN,
                                           password=USER_PASSWORD))
         response = self.client.get(reverse('accounts:edit'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Logout')
-        self.assertEqual(self.client.logout())
+        self.client.logout()
+        response = self.client.get(reverse('accounts:edit'))
+        self.assertEqual(response.status_code, 302)
 
     def test_unauth_request_edit_page(self):
         response = self.client.get(APP_MAIN_PAGE)
