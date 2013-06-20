@@ -5,8 +5,8 @@ from .forms import UserProfileForm
 
 
 USER_NAME = 'Andriy'
-USER_LOGIN = 'dustin'
-USER_PASSWORD = 'testdata'
+USER_LOGIN = 'admin'
+USER_PASSWORD = 'admin'
 USER_NEW_NAME = 'King-Kong-Dong'
 USER_SURNAME = 'Sherepa'
 USER_EMAIL = 'asherepa@gmail.com'
