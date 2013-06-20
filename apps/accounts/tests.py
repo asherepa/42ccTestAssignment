@@ -1,7 +1,6 @@
 from datetime import date
-
+from django.core.urlresolvers import reverse
 from django.test import TestCase
-from django.test import Client
 
 
 USER_NAME = 'Andriy'
@@ -19,8 +18,7 @@ class SimpleTest(TestCase):
 
     def test_main_page_context_data(self):
 
-        c = Client()
-        response = c.get('/')
+        response = self.client.get(reverse('accounts:index'))
         profile = response.context['profile']
         self.assertEqual(response.status_code, 200)
         self.assertEqual(profile.first_name, USER_NAME)
