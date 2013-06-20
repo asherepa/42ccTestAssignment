@@ -170,7 +170,7 @@ LOGGING = {
 }
 
 FIXTURE_DIRS = (
-    '/fixtures/',
+    '/apps/accounts/fixtures/',
 )
 
 AUTH_USER_MODEL = 'accounts.UserProfile'
