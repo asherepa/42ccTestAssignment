@@ -1,7 +1,9 @@
 from django.conf.urls import patterns, url
+from .views import index, edit
 
-from apps.accounts.views import index
 
-urlpatterns = patterns('apps.accounts.views',
+urlpatterns = patterns(
+    'apps.accounts.views',
     url(r'^$', index.as_view(), name='index'),
+    url(r'^accounts/edit/$', edit, name='edit'),
 )

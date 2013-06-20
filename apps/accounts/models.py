@@ -8,3 +8,5 @@ class UserProfile(AbstractUser):
     jid = models.CharField(max_length=254, blank=True)
     skype_id = models.CharField(max_length=254, blank=True)
     other_contacts = models.TextField(max_length=1000, blank=True)
+    user_photo = models.ImageField(upload_to='photos/%Y/%m/%d',
+                                   blank=True, null=True)

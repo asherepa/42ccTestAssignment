@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container_24">
+<form enctype="multipart/form-data" action="{% url 'accounts:edit' %}" method="POST"
+id="userform">
+    {% csrf_token %}
+    <div class="grid_2"><p>Name:</p></div>
+    <div class="grid_2"><p>{{ form.first_name }}</p></div>
+    <div class="grid_5 push_5 omega"><p>Email:</p></div>
+    <div class="grid_4 push_2 omega">{{ form.email }}</div>
+    <div class="clear"></div>
+
+    <div class="grid_2"><p>Last name:</p></div>
+    <div class="grid_2"><p>{{ form.last_name }}</p></div>
+    <div class="grid_5 push_5 omega"><p>Jabber:</p></div>
+    <div class="grid_4 push_2 omega"><p>{{ form.jid }}</p></div>
+    <div class="clear"></div>
+
+    <div class="grid_2"><p>Date of birth:</p></div>
+    <div class="grid_2"><p>{{ form.date_of_birth }}</p></div>
+    <div class="grid_5 push_5 omega"><p>Skype:</p></div>
+    <div class="grid_4 push_2 omega"><p>{{ form.skype_id }}</p></div>
+    <div class="clear"></div>
+
+    <div class="grid_2"><p>Photo:</p></div>
+    <div class="grid_2"><p>{{ form.user_photo }}</p></div>
+
+    <div class="clear"></div>
+
+    <div class="grid_9">
+    {% include "accounts/user_profile_photo.html" %}
+    </div>
+
+    <div class="grid_10">
+        <div class="grid_4">
+            Other contacts:
+            {{ form.other_contacts }}
+        </div>
+        <div class="clear"></div>
+        <div class="grid_4">
+            Bio:
+            {{ form.bio }}
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+
+    <div class="grid_8" id="sendwrapper"></div>
+    <div class="clear"></div>
+    <div class="grid_8" id="ajaxwrapper"></div>
+    <div class="clear"></div>
+
+    <input type="submit" id="sendbutton" value="Save" />
+    <input type="reset" value="Cancel" />
+</form>
+</div>
+{% endblock content %}

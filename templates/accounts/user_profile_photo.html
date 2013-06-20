@@ -1,0 +1,6 @@
+{% load static %}
+{% if profile.user_photo %}
+<img src="{{ profile.user_photo.url }}" alt="User photo" height="300" width="250" border="2">
+{% else %}
+<img src="{% static "img/empty.png" %}" alt="User photo" height="300" width="250" border="2">
+{% endif %}
