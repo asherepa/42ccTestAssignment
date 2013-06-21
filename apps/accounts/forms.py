@@ -29,8 +29,15 @@ class UserProfileForm(forms.ModelForm):
             'date_of_birth': CalendarWidget(attrs={'id': 'datepicker'})
         }
 
+    class Media:
+        js = (
+            'js/jquery.form.js',
+            'js/accounts.js'
+        )
+
     def clean_skype_id(self):
         skype_id = self.cleaned_data['skype_id']
         if len(skype_id) < 6 or len(skype_id) > 32:
             raise forms.ValidationError('Login length must be in the range of 6 to 32')
         return skype_id
+

@@ -1,6 +1,12 @@
+try:
+    import simplejson as json
+except ImportError:
+    from django.utils import simplejson as json
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import generic
 
@@ -27,6 +33,7 @@ class index(generic.ListView):
 @login_required(login_url='/accounts/login/')
 def edit(request):
 
+    errors = {}
     profile = UserProfile.objects.get(pk=1)
 
     if request.method == 'POST':
@@ -40,9 +47,24 @@ def edit(request):
             # such as username, password, etc.
             f = form.save(commit=False)
             f.save(update_fields=interaction_fields)
-            return redirect(reverse('accounts:edit'))
+            if request.is_ajax():
+                return HttpResponse(json.dumps(
+                    {
+                        'errors': errors,
+                        'success': True
+                    }), content_type="application/json")
+            else:
+                return redirect(reverse('accounts:edit'))
         else:
-            return redirect(reverse('accounts:edit'))
+            if request.is_ajax():
+                errors = dict(form.errors.items())
+                return HttpResponse(json.dumps(
+                    {
+                        'errors': errors,
+                        'success': False
+                    }), content_type="application/json")
+            else:
+                return redirect(reverse('accounts:edit'))
     else:
         form = UserProfileForm(instance=profile)
         return render(request, 'accounts/user_profile_edit.html',
