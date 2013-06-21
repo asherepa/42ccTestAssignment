@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% block additional_resourses %}
+{{ form.media }}
+{% endblock additional_resourses %}
 {% block content %}
 <div class="container_24">
 <form enctype="multipart/form-data" action="{% url 'accounts:edit' %}" method="POST"
