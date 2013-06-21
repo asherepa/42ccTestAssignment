@@ -1,4 +1,8 @@
 from datetime import date
+try:
+    import simplejson as json
+except ImportError:
+    from django.utils import simplejson as json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from .forms import UserProfileForm
@@ -20,7 +24,9 @@ APP_MAIN_PAGE = reverse('accounts:index')
 
 
 class SimpleTest(TestCase):
+
     def test_main_page_context_data(self):
+
         response = self.client.get(APP_MAIN_PAGE)
         profile = response.context['profile']
         self.assertEqual(response.status_code, 200)
@@ -34,7 +40,9 @@ class SimpleTest(TestCase):
 
 
 class AuthTest(TestCase):
+
     def test_login_success(self):
+
         response = self.client.get(APP_MAIN_PAGE)
         self.assertTrue(response.status_code, 200)
         self.assertTrue(self.client.login(username=USER_LOGIN,
@@ -56,22 +64,27 @@ class AuthTest(TestCase):
 
 class UserProfileFormTest(TestCase):
 
-    valid_data = {
-        'first_name': USER_NAME,
-        'last_name': USER_SURNAME,
-        'bio': USER_BIO,
-        'date_of_birth': USER_DATE_OF_BIRTH,
-        'email': USER_EMAIL,
-        'jid': USER_JABBER_JID,
-        'skype_id': USER_SKYPE_ID,
-        'other_contacts': USER_OTHER_CONTACTS
-    }
+    def setUp(self):
 
-    invalid_data_set = [
-        {'skype_id': 'error'},  # len < 6
-    ]
+        self.valid_data = {
+            'first_name': USER_NAME,
+            'last_name': USER_SURNAME,
+            'bio': USER_BIO,
+            'date_of_birth': USER_DATE_OF_BIRTH,
+            'email': USER_EMAIL,
+            'jid': USER_JABBER_JID,
+            'skype_id': USER_SKYPE_ID,
+            'other_contacts': USER_OTHER_CONTACTS
+        }
+
+        self.invalid_data_set = [
+            {'skype_id': 'error'},  # len < 6
+        ]
+        self.assertTrue(self.client.login(username=USER_LOGIN,
+                                          password=USER_PASSWORD))
 
     def test_user_profile_form(self):
+
         form = UserProfileForm(self.valid_data)
         self.assertTrue(form.is_valid())
 
@@ -82,7 +95,38 @@ class UserProfileFormTest(TestCase):
 
         for data in self.invalid_data_set:
                 for key, value in data.iteritems():
-                    check_data = self.valid_data
-                    check_data[key] = value
-                    form = UserProfileForm(check_data)
+                    invalid_data = self.valid_data
+                    invalid_data[key] = value
+                    form = UserProfileForm(invalid_data)
                     self.assertFalse(form.is_valid())
+
+    def test_ajax_form_update_with_correct_data(self):
+
+        returned_data = self.post_request(self.valid_data)
+        self.assertTrue(returned_data['success'])
+        self.assertEqual(returned_data['errors'], {})
+
+    def test_ajax_form_update_with_bad_data(self):
+
+        for data in self.invalid_data_set:
+                for key, value in data.iteritems():
+                    invalid_data = self.valid_data
+                    invalid_data[key] = value
+                    returned_data = self.post_request(invalid_data)
+                    self.assertFalse(returned_data['success'])
+                    errors = returned_data['errors']
+                    self.assertTrue(key in errors)
+
+    def post_request(self, data):
+
+        response = self.client.post(
+            reverse('accounts:edit'),
+            self.valid_data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response['Content-Type'],
+                        'application/json')
+        returned_data = json.loads(response.content)
+        self.assertTrue('success' in returned_data)
+        self.assertTrue('errors' in returned_data)
+        return returned_data
