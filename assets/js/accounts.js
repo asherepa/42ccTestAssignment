@@ -6,28 +6,31 @@ $(document).ready(function () {
     };
 
     $('#userform').submit(function(e) {
-        $("#sendwrapper").prepend('<span>Sending message ...</span>');
+        var message_area = $("#sendwrapper");
+        message_area.empty();
+        message_area.prepend('<span>Sending message ...</span>')
+            .css('color', 'black')
+            .show();
         $(this).ajaxSubmit(options);
         $("#userform input, select, textarea").attr('disabled', 'disabled');
         e.preventDefault();
     });
 
     function showResponse(responseText, statusText)  {
-        console.log(responseText + " " + statusText)
         $('#userform input, select, textarea').removeAttr('disabled');
+        var message_area = $("#sendwrapper");
+        message_area.empty();
         if (responseText['success']) {
-            $("#sendwrapper span").remove();
-            $("#sendwrapper")
+            message_area
                 .prepend('<span>Changes have been saved</span>')
-                .fadeOut(5000);
+                .fadeOut(3000);
         } else {
             $.each(responseText['errors'], function(key, val) {
                 console.log("key:" + key + " val:" + val);
             });
-            $("#sendwrapper")
-                .prepend('<span>Changes have been saved</span>')
-                .css("color: red;")
-                .fadeOut(5000);
+            message_area
+                .prepend('<span>An error occurred while sending the form!</span>')
+                .css('color', 'red');
         }
     };
 });
