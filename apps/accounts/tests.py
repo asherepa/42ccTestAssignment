@@ -4,9 +4,9 @@ try:
 except ImportError:
     from django.utils import simplejson as json
 from django.core.urlresolvers import reverse
+from django.template import Context, RequestContext, Template
 from django.test import TestCase
 from .forms import UserProfileForm
-
 
 USER_NAME = 'Andriy'
 USER_LOGIN = 'admin'
@@ -41,7 +41,11 @@ class SimpleTest(TestCase):
 
 class AuthTest(TestCase):
 
-    def test_login_success(self):
+    def test_simple_login(self):
+        self.assertTrue(self.client.login(username=USER_LOGIN,
+                                          password=USER_PASSWORD))
+
+    def test_login_and_logout_success(self):
 
         response = self.client.get(APP_MAIN_PAGE)
         self.assertTrue(response.status_code, 200)
@@ -130,3 +134,17 @@ class UserProfileFormTest(TestCase):
         self.assertTrue('success' in returned_data)
         self.assertTrue('errors' in returned_data)
         return returned_data
+
+
+class TemplateTagTest(TestCase):
+
+    def test_edit_link_template_tag(self):
+        self.assertTrue(self.client.login(username=USER_LOGIN,
+                                          password=USER_PASSWORD))
+        response = self.client.get(APP_MAIN_PAGE)
+        context = response.context
+        t = Template('{% load edit_tags %}' +
+                     '{% edit_link user %}')
+        c = Context(context)
+        rendered = t.render(c)
+        self.assertEqual(rendered, "/admin/accounts/userprofile/1/")
