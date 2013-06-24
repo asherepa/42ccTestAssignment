@@ -4,6 +4,7 @@ try:
 except ImportError:
     from django.utils import simplejson as json
 import os
+import StringIO
 
 from django.core.management import call_command
 from django.core.urlresolvers import reverse
@@ -156,14 +157,12 @@ class TemplateTagTest(TestCase):
 
 class CommandCountTest(TestCase):
 
-    def test_command_countd(self):
-        fname = "%s.dat" % datetime.now().strftime("%Y%m%d")
-        with open(fname, 'w') as f:
-            call_command('count', stdout=f)
-        with open(fname) as o:
-            l = o.readlines()
-            self.assertTrue('Models accounts: 1\n' in l)
-        os.remove(fname)
+    def test_command_count(self):
+        f = StringIO.StringIO()
+        call_command('count', stdout=f)
+        l = f.getvalue()
+        self.assertTrue('Models accounts: 1\n' in l)
+        self.assertFalse('Models accounts: 2\n' in l)
 
 
 class SignalsTest(TestCase):
