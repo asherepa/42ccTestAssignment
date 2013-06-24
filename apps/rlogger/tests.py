@@ -2,6 +2,8 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from .models import RequestsLogger
 
+USER_LOGIN = 'admin'
+USER_PASSWORD = 'admin'
 REQUESTS_PAGE_MAX_RECORD_PER_PAGE = 10
 REQUESTS_PAGE_URL = reverse('requests:index')
 
@@ -40,3 +42,24 @@ class ContextProcessorTest(TestCase):
         settings_context = response.context['settings']
         self.assertEqual(settings_context.AUTH_USER_MODEL,
                          'accounts.UserProfile')
+
+
+class ChangePriorityTest(TestCase):
+
+    def test_change_priority(self):
+        self.assertTrue(self.client.login(username=USER_LOGIN,
+                                          password=USER_PASSWORD))
+        self.client.get(reverse('requests:index'))
+        r = RequestsLogger.objects.get(pk=1)
+        self.assertEqual(r.priority, 0)
+
+        url = "%s?sort=0&action=up" % reverse('requests:event', args=(r.id,))
+        self.assertEqual(self.check_update(url, r.id), 1)
+
+        url = "%s?sort=0&action=down" % reverse('requests:event', args=(r.id,))
+        self.assertEqual(self.check_update(url, r.id), 0)
+
+    def check_update(self, url, key):
+        self.client.get(url)
+        r = RequestsLogger.objects.get(pk=key)
+        return r.priority
