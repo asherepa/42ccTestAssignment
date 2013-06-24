@@ -7,6 +7,8 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, **options):
         for m in models.get_models():
-            model_count_line = "Models %s: %d" % (m._meta.app_label, m.objects.count())
-            self.stderr.write("error: %s" % model_count_line)
-            self.stdout.write(model_count_line)
+            if hasattr(m, 'objects'):
+                model_count_line = "Models %s: %d" % (m._meta.app_label,
+                                                      m.objects.count())
+                self.stderr.write("error: %s" % model_count_line)
+                self.stdout.write(model_count_line)
