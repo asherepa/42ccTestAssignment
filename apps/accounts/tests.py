@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.template import Context, Template
 from django.test import TestCase
 from .forms import UserProfileForm
+from .models import UserProfile, ModelLog
 
 USER_NAME = 'Andriy'
 USER_LOGIN = 'admin'
@@ -163,3 +164,20 @@ class CommandCountTest(TestCase):
             l = o.readlines()
             self.assertTrue('Models accounts: 1\n' in l)
         os.remove(fname)
+
+
+class SignalsTest(TestCase):
+
+    def test_create_signal(self):
+        before_count = ModelLog.objects.count()
+        u = UserProfile.objects.create(username='test',
+                                       email='test@example.com',
+                                       password='testpassword')
+        after_count = ModelLog.objects.count()
+        self.assertEqual(after_count, before_count + 1)
+        before_count = after_count
+        u.username = 'another'
+        u.save()
+        after_count = ModelLog.objects.count()
+        self.assertEqual(after_count, before_count + 1)
+        u.delete()
