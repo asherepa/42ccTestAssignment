@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.safestring import mark_safe
 from .models import UserProfile
 
 
@@ -11,8 +12,17 @@ class CalendarWidget(forms.DateInput):
         js = (
             'http://code.jquery.com/jquery-1.9.1.js',
             'http://code.jquery.com/ui/1.10.3/jquery-ui.js',
-            'js/jquery-ui.datepicker.js'
         )
+
+    def __init__(self, params='', attrs=None):
+        self.params = params
+        super(CalendarWidget, self).__init__(attrs=attrs)
+
+    def render(self, name, value, attrs=None):
+        rendered = super(CalendarWidget, self).render(name, value, attrs=attrs)
+        return rendered + mark_safe('''<script type="text/javascript">
+            $('#id_%s').datepicker({%s});
+            </script>''' % (name, self.params))
 
 
 class UserProfileForm(forms.ModelForm):
@@ -26,7 +36,10 @@ class UserProfileForm(forms.ModelForm):
                             'accept': "image/jpeg,image/png,image/gif",
                             'size': 11
                           }),
-            'date_of_birth': CalendarWidget(attrs={'id': 'datepicker'})
+            'date_of_birth': CalendarWidget(params='''changeYear: true,
+                    dateFormat: "yy-mm-dd", yearRange: "c-100:c+0",
+                    maxDate: "+2D"''', attrs={'class': 'datepicker'}
+                )
         }
 
     class Media:
@@ -40,4 +53,3 @@ class UserProfileForm(forms.ModelForm):
         if len(skype_id) < 6 or len(skype_id) > 32:
             raise forms.ValidationError('Login length must be in the range of 6 to 32')
         return skype_id
-
