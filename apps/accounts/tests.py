@@ -1,10 +1,13 @@
-from datetime import date
+from datetime import date, datetime
 try:
     import simplejson as json
 except ImportError:
     from django.utils import simplejson as json
+import os
+
+from django.core.management import call_command
 from django.core.urlresolvers import reverse
-from django.template import Context, RequestContext, Template
+from django.template import Context, Template
 from django.test import TestCase
 from .forms import UserProfileForm
 
@@ -148,3 +151,15 @@ class TemplateTagTest(TestCase):
         c = Context(context)
         rendered = t.render(c)
         self.assertEqual(rendered, "/admin/accounts/userprofile/1/")
+
+
+class CommandCountTest(TestCase):
+
+    def test_command_countd(self):
+        fname = "%s.dat" % datetime.now().strftime("%Y%m%d")
+        with open(fname, 'w') as f:
+            call_command('count', stdout=f)
+        with open(fname) as o:
+            l = o.readlines()
+            self.assertTrue('Models accounts: 1\n' in l)
+        os.remove(fname)
