@@ -4,6 +4,7 @@ First run
 Create your virtual environment.
 
 Run from project dir:
+
     pip install -r requirements.txt
     make syncall
     make run
